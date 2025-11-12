@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  mcp-hub:
+    build: ./services/mcp_hub
+    container_name: mcp-hub
+    environment:
+      MCP_ROOT: /data
+    volumes:
+      - ./data:/data
+    ports:
+      - "8765:8765"  # HTTP bridge for MCP (list/read)
+
+  agent-gateway:
+    build: ./services/agent_gateway
+    container_name: agent-gateway
+    env_file:
+      - ./.env
+    environment:
+      MCP_BRIDGE_URL: http://mcp-hub:8765
+    depends_on:
+      - mcp-hub
+    ports:
+      - "8080:8080"

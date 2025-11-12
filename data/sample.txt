@@ -1,0 +1,1 @@
+Hello from the MCP-mounted data folder. Add more files here and ask the agent to list or read them!
